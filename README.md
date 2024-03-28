@@ -13,7 +13,7 @@ yal - Yet Another Landingpage
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=timo-reymann_yal&metric=bugs)](https://sonarcloud.io/summary/new_code?id=timo-reymann_yal)
 
 <p align="center">
-	<img width="600" src="https://raw.githubusercontent.com/timo-reymann/yal/main/.github/images/example.png">
+	<img width="800" src="https://raw.githubusercontent.com/timo-reymann/yal/main/.github/images/example.png">
     <br />
     A simple link hub, to display and search links. Allows easy branding, runs with the least privileges and is simple to use.
 </p>
