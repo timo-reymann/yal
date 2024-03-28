@@ -46,6 +46,7 @@
             position: absolute;
             top: 0;
             height: 100%;
+            z-index: -1;
         }
 
         .overlay--left {
@@ -75,7 +76,7 @@
 
         .search--search-field {
             border: .2em solid rgb(63, 68, 70);
-            background-color: rgb(25, 26, 27);
+            background-color: rgba(25, 26, 27,.6);
             color: white;
             border-radius: 20px;
             box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
@@ -94,10 +95,9 @@
             border: .2em solid rgb(63, 68, 70);
             box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
             cursor: auto;
-            background-color: rgb(25, 26, 27);
+            background-color: rgb(25, 26, 27,1);
             backdrop-filter: blur(10px);
             border-top: 1px solid rgb(63, 68, 70);
-
             display: block;
             font-size: 15px;
             text-align: left;
@@ -235,19 +235,44 @@
         }
 
         .overlay--logo {
-            top: 75%;
+            top: 80vh;
             margin-right: 60px;
-            max-height: 200px
+            max-width: 200px
         }
 
         .overlay--mascot {
-            top: 30%;
+            top: 30vh;
             padding-left: 20px;
             max-width: 200px;
         }
 
         .hidden {
             display: none;
+        }
+
+        @media(max-width: 530px) {
+            .overlay--mascot,
+            .overlay--logo {
+                display: none;
+            }
+        }
+
+        @media(max-width: 900px) {
+            .overlay--mascot,
+            .overlay--logo {
+                top: 5%;
+                max-width: 8vw;
+            }
+
+            main {
+                width: 80vw;
+            }
+        }
+
+        @media(min-width: 2000px) {
+            main {
+                width: 80vw;
+            }
         }
     </style>
     <script>
