@@ -3,6 +3,7 @@ package templating
 import (
 	"bytes"
 	_ "embed"
+	"github.com/timo-reymann/yal/pkg/buildinfo"
 	"github.com/timo-reymann/yal/pkg/config"
 	"os"
 	"text/template"
@@ -24,6 +25,11 @@ func RenderTemplate(path string, c *config.Configuration) (string, error) {
 	}
 
 	tmpl := template.New("index")
+	tmpl.Funcs(template.FuncMap{
+		"Version": func() string {
+			return buildinfo.Version
+		},
+	})
 	tmpl, err = tmpl.Parse(string(htmlFile))
 	if err != nil {
 		return "", err
