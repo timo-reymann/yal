@@ -108,6 +108,7 @@ jobs:
           name: Build demo page
           command: |
             mkdir gh-pages
+            export YAL_PAGE_TITLE="Link Hub | ACME Corp"
             ./dist/yal_linux-amd64 -render -output gh-pages/index.html
       - github-utils/publish_github_pages:
           folder: gh-pages/

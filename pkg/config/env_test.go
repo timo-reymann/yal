@@ -62,7 +62,7 @@ func TestPort_NotSet(t *testing.T) {
 }
 
 func TestConfigFolder_NotSet(t *testing.T) {
-	if ConfigFolder() != "config" {
+	if Folder() != "config" {
 		t.Error("Expected default config folder to be set")
 	}
 }

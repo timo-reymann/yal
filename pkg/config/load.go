@@ -15,6 +15,7 @@ type Assets struct {
 }
 
 type Configuration struct {
+	PageTitle     string
 	Sections      []model.Section
 	SearchEngines []model.SearchEngine
 	Assets        Assets
@@ -30,8 +31,8 @@ func ImageFolder() string {
 	return envWithDefault("IMAGES_FOLDER", "images")
 }
 
-// ConfigFolder returns the folder where config files are located
-func ConfigFolder() string {
+// Folder returns the folder where config files are located
+func Folder() string {
 	return envWithDefault("CONFIG_FOLDER", "config")
 }
 
@@ -68,6 +69,7 @@ func Load() (*Configuration, error) {
 	}
 
 	return &Configuration{
+		PageTitle:     envWithDefault("PAGE_TITLE", "LinkHub - The place where it just clicks."),
 		Sections:      sections,
 		SearchEngines: searchEngines,
 		Assets: Assets{
@@ -80,7 +82,7 @@ func Load() (*Configuration, error) {
 }
 
 func loadConfig(baseName string, v interface{}) error {
-	data, err := os.ReadFile(path2.Join(ConfigFolder(), baseName+".json"))
+	data, err := os.ReadFile(path2.Join(Folder(), baseName+".json"))
 	if err != nil {
 		return err
 	}

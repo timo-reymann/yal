@@ -55,6 +55,8 @@ services:
     environment:
       # Port to listen
       YAL_PORT: 2024
+      # page title for html
+      YAL_PAGE_TITLE: My link hub
       # Path to config files
       YAL_CONFIG_FOLDER: /app/config
       # Path to images, see below for available ones
