@@ -39,8 +39,9 @@ func TestEnvWithDefault_EnvEmpty(t *testing.T) {
 }
 
 func TestImageFromEnv_ExistingFile(t *testing.T) {
-	os.Setenv("YAL_IMAGE_VARIABLE", "testdata/icon")
-	_, err := imageFromEnv("IMAGE_VARIABLE", "testdata/fallback.png")
+	os.Setenv("YAL_IMAGES_FOLDER", "testdata")
+	os.Setenv("YAL_IMAGE_VARIABLE", "icon")
+	_, err := imageFromEnv("IMAGE_VARIABLE", "fallback.png")
 	if err != nil {
 		t.Errorf("Unexpected error: %v", err)
 	}

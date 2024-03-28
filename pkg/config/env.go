@@ -17,8 +17,8 @@ func envWithDefault(variable string, fallback string) string {
 }
 
 func imageFromEnv(variable string, fallbackFile string) (string, error) {
-	path := envWithDefault(variable, path2.Join(ImageFolder(), fallbackFile))
-	resolvedPath, err := assets.LookupImgAnyExt(path)
+	path := envWithDefault(variable, fallbackFile)
+	resolvedPath, err := assets.LookupImgAnyExt(path2.Join(ImageFolder(), path))
 	if err != nil {
 		return "", err
 	}
