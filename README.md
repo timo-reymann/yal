@@ -53,11 +53,54 @@ services:
       - ./icons:/app/icons # optional in case you want to use local icons
       - ./images:/app/images # contains favicon etc.
     environment:
+      # Port to listen
       YAL_PORT: 2024
-      YAL_MASCOT: /app/images/mascot
-      YAL_LOGO: /app/images/logo
-      YAL_BACKGROUND: /app/images/background
-      YAL_FAVICON: /app/images/favicon
+      # Path to config files
+      YAL_CONFIG_FOLDER: /app/config
+      # Path to images, see below for available ones
+      YAL_IMAGES_FOLDER: /app/images
+      # Omit file extension as it will be picked up by name automatically
+      YAL_MASCOT: mascot # the mascot to display on the left
+      YAL_LOGO: logo # logo to display on the right
+      YAL_BACKGROUND: background # background image for page
+      YAL_FAVICON: favicon # favicon to serve
+```
+
+## Configuration
+
+Besides the env vars, there are two config files to maintain:
+
+### searchEngines.json
+
+Configures the search engines for search box to display as last elements
+
+```json
+[
+  {
+    "title": "Name",
+    "urlPrefix": "https://my.search?text=<here search term will be appended>"
+  }
+]
+```
+
+### items.json
+
+Configures the links to display.
+
+```json
+[
+  {
+    "title": "<Title of the section>",
+    "entries": [
+      {
+        "text": "<Display text for the link>",
+        "link": "<link>",
+        "description": "<short description for search and hover tooltip>",
+        "icon": "<url or local path, can be relative; needs to be accessible by container and will be inlined on start up>"
+      }
+    ]
+  }
+]
 ```
 
 ## Motivation
