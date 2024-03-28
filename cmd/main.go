@@ -39,7 +39,7 @@ func Run() {
 
 	rendered, err := renderTemplate(*templateFile)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to render template: %s", err.Error())
 	}
 
 	if *render {
@@ -52,13 +52,13 @@ func Run() {
 
 		templatedFile, err := os.Create(*renderOutput)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Failed to write templated file: %s", err.Error())
 		}
 		defer templatedFile.Close()
 
 		_, err = templatedFile.WriteString(rendered)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Failed to write templated content to file: %s", err.Error())
 		}
 	}
 
