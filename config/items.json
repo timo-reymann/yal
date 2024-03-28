@@ -1,0 +1,95 @@
+[
+  {
+    "title": "Development",
+    "entries": [
+      {
+        "text": "GitLab",
+        "link": "https://gitlab.com",
+        "description": "DeepL GitLab Instance",
+        "icon": "https://cdn.simpleicons.org/gitlab"
+      },
+      {
+        "text": "Grafana",
+        "link": "https://grafana.example.com/",
+        "description": "Central grafana instance",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Harbor",
+        "link": "https://harbor.example.com/",
+        "description": "OCI Images and helm charts",
+        "icon": "https://cdn.simpleicons.org/harbor"
+      },
+      {
+        "text": "Nexus",
+        "link": "https://nexus.example.com",
+        "description": "SonaType Nexus Repository for Maven",
+        "icon": "https://cdn.simpleicons.org/sonatype/white"
+      },
+      {
+        "text": "Backstage",
+        "link": "https://backstage.example.com",
+        "icon": "https://cdn.simpleicons.org/backstage",
+        "description": "Developer platform docs"
+      },
+      {
+        "text": "Artifactory",
+        "link": "https://artifactory.example.com",
+        "description": "Artifactory hosting internal packages and package proxy",
+        "icon": "https://cdn.simpleicons.org/artifacthub"
+      }
+    ]
+  },
+  {
+    "title": "Collaboration",
+    "entries": [
+      {
+        "text": "Jira",
+        "link": "https://deepl.atlassian.net/jira/",
+        "description": "Ticket-System",
+        "icon": "https://cdn.simpleicons.org/jira"
+      },
+      {
+        "text": "Confluence",
+        "link": "https://deepl.atlassian.net/wiki/",
+        "description": "Wiki",
+        "icon": "https://cdn.simpleicons.org/confluence/0052CC"
+      }
+    ]
+  },
+  {
+    "title": "Monitoring",
+    "entries": [
+      {
+        "text": "Grafana",
+        "link": "https://grafana.example.com/",
+        "description": "Central grafana instance",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Alertmanager",
+        "link": "https://alertmanager.example.com",
+        "description": "Central Alertmanager instance",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Prometheus",
+        "link": "https://prometheus.example.com/",
+        "description": "Prometheus",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "PagerDuty",
+        "link": "https://example.eu.pagerduty.com/",
+        "description": "Our PagerDuty tenant",
+        "icon": "https://cdn.simpleicons.org/pagerduty"
+      },
+      {
+        "text": "Gatus",
+        "link": "https://gatus.example.com/",
+        "description": "Internal Status Page",
+        "icon": "https://raw.githubusercontent.com/TwiN/gatus/master/.github/assets/logo.png"
+      }
+    ]
+  }
+]
