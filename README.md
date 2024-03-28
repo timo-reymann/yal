@@ -18,6 +18,10 @@ yal - Yet Another Landingpage
     A simple link hub, to display and search links. Allows easy branding, runs with the least privileges and is simple to use.
 </p>
 
+## Demo
+
+[Click here](https://timo-reymann.github.io/yal/)
+
 ## Features
 
 - statically generated site
