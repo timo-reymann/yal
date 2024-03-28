@@ -3,6 +3,7 @@ package cmd
 import (
 	_ "embed"
 	"flag"
+	"github.com/timo-reymann/yal/pkg/buildinfo"
 	"github.com/timo-reymann/yal/pkg/config"
 	"github.com/timo-reymann/yal/pkg/templating"
 	"log"
@@ -24,8 +25,11 @@ func Run() {
 	var render = flag.Bool("render", false, "Render to output and exit")
 	var serve = flag.Bool("serve", false, "Render and serve on HTTP")
 	var renderOutput = flag.String("output", "templated.html", "File to render to if -render is specified, use - to render to stdout")
-
 	flag.Parse()
+
+	println("---------------------------------------------")
+	buildinfo.PrintVersionInfo()
+	println("---------------------------------------------")
 
 	if *render && *serve {
 		log.Fatal("-render and -serve are mutually exclusive")
