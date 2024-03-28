@@ -20,7 +20,7 @@ func RenderTemplate(path string, c *config.Configuration) (string, error) {
 	} else {
 		htmlFile, err = os.ReadFile(path)
 		if err != nil {
-			return "", nil
+			return "", err
 		}
 	}
 

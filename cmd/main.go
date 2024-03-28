@@ -14,7 +14,7 @@ import (
 func renderTemplate(templateFile string) (string, error) {
 	c, err := config.Load()
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 
 	return templating.RenderTemplate(templateFile, c)
