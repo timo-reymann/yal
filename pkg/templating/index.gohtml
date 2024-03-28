@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LinkHub - The place where it just clicks.</title>
+    <link rel="icon" href="{{ .Assets.Favicon }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        html {
+            color: white;
+            background: black;
+            background-image: url("{{.Assets.Background}}");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+            backdrop-filter: blur(5px) brightness(0.9);
+        }
+
+        header {
+            position: relative;
+            padding-top: 30px;
+        }
+
+        main {
+            width: 50vw;
+            margin: auto;
+            padding-bottom: 100px;
+        }
+
+        .overlay--left,
+        .overlay--right {
+            position: absolute;
+            top: 0;
+            height: 100%;
+        }
+
+        .overlay--left {
+            left: 0;
+        }
+
+        .overlay--right {
+            right: 0;
+        }
+
+        .search {
+            width: 50vw;
+            margin: auto;
+            position: relative;
+        }
+
+        .search--icon-overlay {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            margin: auto 0;
+            vertical-align: middle;
+        }
+
+        .search--search-field {
+            border: .2em solid rgb(63, 68, 70);
+            background-color: rgb(25, 26, 27);
+            color: white;
+            border-radius: 20px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 24px;
+            border-bottom-width: 3px;
+            text-align: left;
+            font-size: 1.414rem;
+            outline: none;
+            width: 100%;
+            padding: 15px 15px 15px 60px;
+        }
+
+        .search-suggestions {
+            border: .2em solid rgb(63, 68, 70);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+            cursor: auto;
+            background-color: rgb(25, 26, 27);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgb(63, 68, 70);
+
+            display: block;
+            font-size: 15px;
+            text-align: left;
+            border-radius: 0 0 20px 20px;
+            margin-top: -5px;
+            margin-left: 10px;
+            margin-right: 10px;
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+
+        .search-suggestion:first-child {
+            padding: 5px;
+        }
+
+        .search-suggestion--item {
+            color: inherit;
+            padding: 10px 5px;
+            transition: all .1s;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .search-suggestion--item-title {
+            font-weight: bold;
+        }
+
+        .search-suggestion--item-description {
+            text-align: right;
+            font-style: italic;
+        }
+
+        .search-suggestion--item-icon {
+            display: inline-block;
+            vertical-align: middle;
+            width: 32px;
+            height: 32px;
+            padding: 4px 10px 4px 4px;
+        }
+
+        .search-suggestion--item:last-child:hover {
+            border-bottom-left-radius: 17px;
+            border-bottom-right-radius: 17px;
+        }
+
+        .search-suggestion--item:hover,
+        .search-suggestion--item[data-active] {
+            background-color: rgba(51, 118, 184,.5);
+            color: white;
+        }
+
+        .search-suggestion--item-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 10px;
+        }
+
+        .search-suggestion--item-seperator {
+            flex: 1;
+        }
+
+        .search-suggestion--item-description {
+            padding-right: 20px;
+            text-align: left;
+            min-width: 50%;
+        }
+
+        .item-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+        }
+
+        .items-container--no-results {
+            text-align: center;
+            font-size: 20px;
+            margin: 20px;
+        }
+
+        .item-section--items {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .item-section--item {
+            width: 180px;
+            height: 180px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            border-radius: 10%;
+            padding: 10px;
+        }
+
+        .item-section--item:hover {
+            background-color: hsla(0, 0%, 100%, .082);
+            transition: background-color .1s;
+        }
+
+        .item-section--title {
+            margin-top: 60px;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .item-section--item-icon {
+            display: inline-block;
+            background-color: rgba(25, 26, 27, 0.6);
+            padding: 20px;
+            max-width: 100%;
+            max-height: 60%;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
+            border-radius: 20%;
+        }
+
+        .item-section--item-title {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .overlay--logo,
+        .overlay--mascot {
+            position: sticky;
+            z-index: -1;
+            bottom: 0;
+        }
+
+        .overlay--logo {
+            top: 85%;
+            margin-right: 60px;
+            max-height: 80px
+        }
+
+        .overlay--mascot {
+            top: 30%;
+            padding-left: 20px;
+            max-width: 200px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script>
+        const searchEngines = [
+            {{ range .SearchEngines }}
+            {
+                title: "{{ .Title }}",
+                target_prefix: "{{ .UrlPrefix }}",
+            },
+            {{ end }}
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const searchContainer = document.querySelector(".search");
+            const searchField = document.querySelector(".search--search-field");
+            const searchResults = document.querySelector(".search-suggestions");
+            const itemsContainer = document.querySelector(".items-container");
+            const noItemsContainer = document.querySelector(".items-container--no-results");
+
+            let activeItem;
+
+            const createSearchSuggestionItem = (title, description, target, icon, active = false) => {
+                return `<a href="${target}"
+                    ${active ? 'data-active' : ''}
+                    class="search-suggestion--item">
+                    <img class="search-suggestion--item-icon" alt="${title}" src="${icon}" />
+                    <div class="search-suggestion--item-content">
+                        <span class="search-suggestion--item-title">${title}</span>
+                        <span class="search-suggestion--item-seperator"></span>
+                        <span class="search-suggestion--item-description">${description}</span>
+                    </div>
+                </a>`
+            }
+
+            const renderSearchSuggestions = (itemsToDisplay) => {
+                searchResults.innerHTML = "";
+                for (let i = 0; i < itemsToDisplay.length; i++) {
+                    const itemToDisplay = itemsToDisplay[i];
+                    searchResults.innerHTML += createSearchSuggestionItem(
+                        itemToDisplay.title,
+                        itemToDisplay.description,
+                        itemToDisplay.target,
+                        itemToDisplay.icon,
+                        i === 0,
+                    )
+                }
+            }
+
+            const setSearchResultsVisible = (state) => {
+                if (state) {
+                    searchResults.classList.remove("hidden");
+                } else {
+                    searchResults.classList.add("hidden");
+                    setActiveNode(searchResults.children[0])
+                }
+            };
+
+            const setActiveNode = (nodeToActivate) => {
+                if (activeItem) {
+                    delete activeItem.dataset.active;
+                }
+                if (nodeToActivate) {
+                    nodeToActivate.dataset.active = "";
+                }
+            };
+
+            searchField.addEventListener("blur", () => {
+                setTimeout(() => setSearchResultsVisible(false), 100);
+            })
+            searchField.addEventListener("focus", () => setSearchResultsVisible(true));
+
+            searchField.addEventListener("input", () => {
+                const searchResults = []
+
+                for (const item of Array.from(itemsContainer.querySelectorAll("[data-search-text]"))) {
+                    const matchesSearch = item.dataset.searchText.toLowerCase().includes(searchField.value.toLowerCase());
+
+                    if (matchesSearch) {
+                        searchResults.push({
+                            title: item.text,
+                            description: item.dataset.description,
+                            target: item.href,
+                            icon: item.querySelector(".item-section--item-icon").src,
+                        });
+                        item.classList.remove("hidden");
+                    } else {
+                        item.classList.add("hidden");
+                    }
+                }
+
+                let anyVisibleSection = false;
+                for(const section of Array.from(itemsContainer.querySelectorAll(".item-section"))) {
+                    const sectionHasVisibleItems = Array.from(section.querySelectorAll(".item-section--item"))
+                        .filter(el => !el.classList.contains("hidden"))
+                        .length > 0;
+                    if(sectionHasVisibleItems) {
+                        section.classList.remove("hidden");
+                        anyVisibleSection = true;
+                    } else {
+                        section.classList.add("hidden");
+                    }
+                }
+
+                if(anyVisibleSection) {
+                    noItemsContainer.classList.add("hidden");
+                } else {
+                    noItemsContainer.classList.remove("hidden");
+                }
+
+                searchResults.sort((a, b) => a.title.localeCompare(b.title))
+
+                const displayResults = searchResults.slice(0, 5)
+
+                for (const searchEngine of searchEngines) {
+                    displayResults.push({
+                        title: searchEngine.title,
+                        description: `Search in ${searchEngine.title}`,
+                        target: searchEngine.target_prefix + searchField.value,
+                        icon: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBmaWxsPSIjZmZmIiBoZWlnaHQ9IjgwMHB4IiB3aWR0aD0iODAwcHgiIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgdmlld0JveD0iMCAwIDQ4OC40IDQ4OC40IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMCwyMDMuMjVjMCwxMTIuMSw5MS4yLDIwMy4yLDIwMy4yLDIwMy4yYzUxLjYsMCw5OC44LTE5LjQsMTM0LjctNTEuMmwxMjkuNSwxMjkuNWMyLjQsMi40LDUuNSwzLjYsOC43LDMuNiAgICBzNi4zLTEuMiw4LjctMy42YzQuOC00LjgsNC44LTEyLjUsMC0xNy4zbC0xMjkuNi0xMjkuNWMzMS44LTM1LjksNTEuMi04Myw1MS4yLTEzNC43YzAtMTEyLjEtOTEuMi0yMDMuMi0yMDMuMi0yMDMuMiAgICBTMCw5MS4xNSwwLDIwMy4yNXogTTM4MS45LDIwMy4yNWMwLDk4LjUtODAuMiwxNzguNy0xNzguNywxNzguN3MtMTc4LjctODAuMi0xNzguNy0xNzguN3M4MC4yLTE3OC43LDE3OC43LTE3OC43ICAgIFMzODEuOSwxMDQuNjUsMzgxLjksMjAzLjI1eiIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo=",
+                    });
+                }
+
+                renderSearchSuggestions(displayResults);
+                setSearchResultsVisible(searchField.value.trim() !== "");
+            });
+
+            searchContainer.addEventListener("keyup", e => {
+                activeItem = document.querySelector("[data-active]");
+                switch (e.key) {
+                    case "ArrowDown":
+                        setActiveNode(activeItem.nextElementSibling || searchResults.children[0]);
+                        break;
+
+                    case "ArrowUp":
+                        setActiveNode(activeItem.previousElementSibling || searchResults.children[searchResults.children.length - 1]);
+                        break;
+
+                    case "Enter":
+                        setSearchResultsVisible(false);
+                        activeItem.click();
+                        break;
+                }
+            });
+        });
+
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+<header>
+    <div class="search">
+        <img alt="Search" class="search--icon-overlay"
+             src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBmaWxsPSIjZmZmIiBoZWlnaHQ9IjgwMHB4IiB3aWR0aD0iODAwcHgiIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgdmlld0JveD0iMCAwIDQ4OC40IDQ4OC40IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMCwyMDMuMjVjMCwxMTIuMSw5MS4yLDIwMy4yLDIwMy4yLDIwMy4yYzUxLjYsMCw5OC44LTE5LjQsMTM0LjctNTEuMmwxMjkuNSwxMjkuNWMyLjQsMi40LDUuNSwzLjYsOC43LDMuNiAgICBzNi4zLTEuMiw4LjctMy42YzQuOC00LjgsNC44LTEyLjUsMC0xNy4zbC0xMjkuNi0xMjkuNWMzMS44LTM1LjksNTEuMi04Myw1MS4yLTEzNC43YzAtMTEyLjEtOTEuMi0yMDMuMi0yMDMuMi0yMDMuMiAgICBTMCw5MS4xNSwwLDIwMy4yNXogTTM4MS45LDIwMy4yNWMwLDk4LjUtODAuMiwxNzguNy0xNzguNywxNzguN3MtMTc4LjctODAuMi0xNzguNy0xNzguN3M4MC4yLTE3OC43LDE3OC43LTE3OC43ICAgIFMzODEuOSwxMDQuNjUsMzgxLjksMjAzLjI1eiIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo="/>
+
+        <input type="search" placeholder="Search ..." class="search--search-field"/>
+        <div class="search-suggestions hidden">
+        </div>
+    </div>
+</header>
+<aside class="overlay--left">
+    <img class="overlay--mascot" src="{{ .Assets.Mascot }}" alt="Mascot"/>
+</aside>
+<aside class="overlay--right">
+    <img class="overlay--logo" src="{{ .Assets.Logo }}" alt="Logo"/>
+</aside>
+<main class="items-container">
+    <p class="items-container--no-results hidden">
+        No items to display.
+    </p>
+    {{ range .Sections }}
+        <section class="item-section">
+            <h2 class="item-section--title">{{ .Title }}</h2>
+            <div class="item-section--items">
+                {{ range .Entries }}
+                    <a class="item-section--item" href="{{ .Link }}" data-search-text="{{ .Text }}" data-description="{{ .Description }}" title="{{ .Description }}">
+                        <img alt="icon"
+                             src="{{ .InlineIcon }}"
+                             class="item-section--item-icon"></img>
+                        <div class="item-section--item-title">{{ .Text }}</div>
+                    </a>
+                {{end}}
+            </div>
+        </section>
+    {{ end }}
+</main>
+</body>
+</html>

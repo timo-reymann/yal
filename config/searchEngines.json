@@ -1,0 +1,14 @@
+[
+  {
+    "Title": "Confluence",
+    "UrlPrefix": "https://deepl.atlassian.net/wiki/search?text="
+  },
+  {
+    "Title": "Jira",
+    "UrlPrefix": "https://deepl.atlassian.net/issues/?jql=text%20~%20"
+  },
+  {
+    "Title": "GitLab",
+    "UrlPrefix": "https://git.deepl.dev/search?nav_source=dashboard&search="
+  }
+]

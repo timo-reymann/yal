@@ -1,0 +1,197 @@
+[
+  {
+    "title": "Development",
+    "entries": [
+      {
+        "text": "GitLab",
+        "link": "https://git.deepl.dev",
+        "description": "DeepL GitLab Instance",
+        "icon": "https://cdn.simpleicons.org/gitlab"
+      },
+      {
+        "text": "Grafana",
+        "link": "https://grafana.deepl.dev/",
+        "description": "Central grafana instance",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Harbor",
+        "link": "https://harbor.deepl.dev/",
+        "description": "OCI Images and helm charts",
+        "icon": "https://cdn.simpleicons.org/harbor"
+      },
+      {
+        "text": "Jira",
+        "link": "https://deepl.atlassian.net/jira/",
+        "description": "Ticket-System",
+        "icon": "https://cdn.simpleicons.org/jira"
+      },
+      {
+        "text": "Confluence",
+        "link": "https://deepl.atlassian.net/wiki/",
+        "description": "Wiki",
+        "icon": "https://cdn.simpleicons.org/confluence/0052CC"
+      },
+      {
+        "text": "Nexus",
+        "link": "https://nexus.deepl.dev",
+        "description": "SonaType Nexus Repository",
+        "icon": "https://cdn.simpleicons.org/sonatype/white"
+      },
+      {
+        "text": "Backstage",
+        "link": "https://backstage.deepl.dev/docs",
+        "icon": "https://cdn.simpleicons.org/backstage",
+        "description": "Developer platform docs"
+      }
+    ]
+  },
+  {
+    "title": "Monitoring",
+    "entries": [
+      {
+        "text": "Grafana",
+        "link": "https://grafana.deepl.dev/",
+        "description": "Central grafana instance",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Grafana DUS",
+        "link": "https://grafana.k.dus.deepl.dev/",
+        "description": "Grafana in Düsseldorf",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Grafana FAL",
+        "link": "https://grafana.k.fal.deepl.dev/",
+        "description": "Grafana in Falun",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Grafana FAL-dev",
+        "link": "https://grafana.k.fal-dev.deepl.dev/",
+        "description": "Grafana in Falun for Dev-Cluster",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Grafana KAJ",
+        "link": "https://grafana.k.kaj.deepl.dev/",
+        "description": "Grafana in Kajani",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Grafana KEF",
+        "link": "https://grafana.k.kef.deepl.dev/",
+        "description": "Grafana in Keflavík",
+        "icon": "https://cdn.simpleicons.org/grafana"
+      },
+      {
+        "text": "Alertmanager DUS",
+        "link": "https://alertmanager.k.dus.deepl.dev/",
+        "description": "Alertmanager in Düsseldorf",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Alertmanager FAL",
+        "link": "https://alertmanager.k.fal.deepl.dev/",
+        "description": "Alertmanager in Falun",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Alertmanager FAL-dev",
+        "link": "https://alertmanager.k.fal-dev.deepl.dev/",
+        "description": "Alertmanager in Falun for Dev-Cluster",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Alertmanager KAJ",
+        "link": "https://alertmanager.k.kaj.deepl.dev/",
+        "description": "Alertmanager in Kajani",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Alertmanager KEF",
+        "link": "https://alertmanager.k.kef.deepl.dev/",
+        "description": "Alertmanager in Keflavík",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Prometheus DUS",
+        "link": "https://prometheus.k.dus.deepl.dev/",
+        "description": "Prometheus in Düsseldorf",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Prometheus FAL",
+        "link": "https://prometheus.k.fal.deepl.dev/",
+        "description": "Prometheus in Falun",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Prometheus FAL-dev",
+        "link": "https://prometheus.k.fal-dev.deepl.dev/",
+        "description": "Prometheus in Falun for Dev-Cluster",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Prometheus KAJ",
+        "link": "https://prometheus.k.kaj.deepl.dev/",
+        "description": "Prometheus in Kajani",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "Prometheus KEF",
+        "link": "https://prometheus.k.kef.deepl.dev/",
+        "description": "Prometheus in Keflavík",
+        "icon": "https://cdn.simpleicons.org/prometheus"
+      },
+      {
+        "text": "PagerDuty",
+        "link": "https://deepl.eu.pagerduty.com/",
+        "description": "PagerDuty",
+        "icon": "https://cdn.simpleicons.org/pagerduty"
+      }
+    ]
+  },
+  {
+    "title": "K8s",
+    "entries": [
+      {
+        "text": "Service Map DUS - dev",
+        "link": "https://service-map.k.dus.deepl.dev/map.html?namespaces=backend-dev",
+        "description": "k8s service map for DUS (dev)",
+        "icon": "icons/map.png"
+      },
+      {
+        "text": "Service Map DUS - test",
+        "link": "https://service-map.k.dus.deepl.dev/map.html?namespaces=backend-test",
+        "description": "k8s service map for DUS (test)",
+        "icon": "icons/map.png"
+      },
+      {
+        "text": "Service Map FAL - prod",
+        "link": "https://service-map.k.fal.deepl.dev/map.html?namespaces=backend-prod",
+        "description": "k8s service map for FAL (prod)",
+        "icon": "icons/map.png"
+      },
+      {
+        "text": "Service Map FAL - dev",
+        "link": "https://service-map.k.fal-dev.deepl.dev/map.html?namespaces=backend-dev",
+        "description": "k8s service map for FAL (dev)",
+        "icon": "icons/map.png"
+      },
+      {
+        "text": "Service Map KAJ - prod",
+        "link": "https://service-map.k.kaj.deepl.dev/map.html?namespaces=backend-prod",
+        "description": "k8s service map for KAJ (prod)",
+        "icon": "icons/map.png"
+      },
+      {
+        "text": "Service Map KEF - prod",
+        "link": "https://service-map.k.kef.deepl.dev/map.html?namespaces=backend-prod",
+        "description": "k8s service map for KEF (prod)",
+        "icon": "icons/map.png"
+      }
+    ]
+  }
+]
