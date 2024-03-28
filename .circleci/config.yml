@@ -1,0 +1,153 @@
+version: '2.1'
+
+job_defaults: &job_defaults
+  filters:
+    tags:
+      only: /.*/
+
+
+orbs:
+  github-cli: circleci/github-cli@2.3.0
+  docker: circleci/docker@2.5.0
+  codecov: codecov/codecov@4.0.1
+  go: circleci/go@1.11.0
+  github-utils: trustedshops-public/github-utils@1.1.2
+
+executors:
+  go:
+    docker:
+      - image: cimg/go:1.22
+  python:
+    docker:
+      - image: cimg/python:3.12
+  node:
+    docker:
+      - image: cimg/go:1.22-node
+
+
+jobs:
+  test:
+    executor: go
+    steps:
+      - checkout
+      - go/load-cache
+      - run:
+          name: Run tests
+          command: |
+            gotestsum --junitfile unit-tests.xml
+            make save-coverage-report
+      - run:
+          name: Get test coverage
+          command: |
+            go test -race -coverprofile=coverage.txt -covermode=atomic  -v ./...
+      - go/save-cache
+      - codecov/upload
+      - store_test_results:
+          path: unit-tests.xml
+      - store_artifacts:
+          path: unit-tests.xml
+      - store_artifacts:
+          path: coverage.html
+
+  build:
+    executor: go
+    steps:
+      - checkout
+      - go/load-cache
+      - run:
+          name: Build binaries
+          command: |
+            make build -j 2
+            make create-checksums
+      - go/save-cache
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - dist/
+
+  publish_docker_image:
+    executor: docker/docker
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - setup_remote_docker:
+          version: 20.10.14
+      - run:
+          name: Build and publish image
+          command: |
+            echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            docker buildx create --use
+            make build-docker
+      - docker/update-description:
+          image: timoreymann/yal
+          docker-username: DOCKER_USERNAME
+          docker-password: DOCKER_TOKEN
+
+  create_github_release:
+    executor: go
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+          name: Retrieve persisted binaries
+      -  github-cli/install:
+           version: "2.21.2"
+      - run:
+          name: Publish release
+          command: |
+            gh release create ${CIRCLE_TAG} --generate-notes dist/*
+
+  publish-demo:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Build demo page
+          command: |
+            mkdir gh-pages
+            ./dist/yal_linux-amd64 -render -output gh-pages/index.html
+      - github-utils/publish_github_pages:
+          folder: gh-pages/
+          git_commit_author_email: "no-reply@timo-reymann.de"
+          git_commit_author_name: "CircleCI"
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test:
+          <<: *job_defaults
+
+      - build:
+          <<: *job_defaults
+          requires:
+            - test
+
+      - publish-demo:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
+
+      - publish_docker_image:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          requires:
+            - build
+
+      - create_github_release:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          requires:
+            - build
