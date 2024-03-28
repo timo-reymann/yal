@@ -11,6 +11,7 @@ orbs:
   docker: circleci/docker@2.5.0
   codecov: codecov/codecov@4.0.1
   go: circleci/go@1.11.0
+  github-utils: trustedshops-public/github-utils@1.1.2
 
 executors:
   go:
@@ -19,6 +20,9 @@ executors:
   python:
     docker:
       - image: cimg/python:3.12
+  node:
+    docker:
+      - image: cimg/go:1.22-node
 
 
 jobs:
@@ -94,6 +98,22 @@ jobs:
           command: |
             gh release create ${CIRCLE_TAG} --generate-notes dist/*
 
+  publish-demo:
+    executor: node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Build demo page
+          command: |
+            mkdir gh-pages
+            ./dist/yal_linux-amd64 -render -output gh-pages/index.html
+      - github-utils/publish_github_pages:
+          folder: gh-pages/
+          git_commit_author_email: "no-reply@timo-reymann.de"
+          git_commit_author_name: "CircleCI"
+
 workflows:
   version: 2
   build:
@@ -105,6 +125,14 @@ workflows:
           <<: *job_defaults
           requires:
             - test
+
+      - publish-demo:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
 
       - publish_docker_image:
           filters:
