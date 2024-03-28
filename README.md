@@ -38,6 +38,10 @@ yal - Yet Another Landingpage
 
 ## Installation
 
+### Run as container
+
+The container generates the static HTML page on startup and serves it using a go webserver.
+
 You can simply run it using e.g. docker with docker-compose:
 
 ```yaml
@@ -62,11 +66,21 @@ services:
       # Path to images, see below for available ones
       YAL_IMAGES_FOLDER: /app/images
       # Omit file extension as it will be picked up by name automatically
+      # each of the entries is searched like ${YAL_IMAGES_FOLDER}/<icon>{png,jpg,jpeg,svg}
       YAL_MASCOT: mascot # the mascot to display on the left
       YAL_LOGO: logo # logo to display on the right
       YAL_BACKGROUND: background # background image for page
       YAL_FAVICON: favicon # favicon to serve
 ```
+
+### Generate static HTML file
+
+Specifying all env vars manually (if you want to customize them) and keeping the directory structure you can also just
+generate a static HTML page.
+
+1. Download the [latest release](https://github.com/timo-reymann/yal/releases/latest) for your platform
+2. `./yarl --render --output file.html`
+3. Serve `file.html` using any static file server
 
 ## Configuration
 
