@@ -302,7 +302,7 @@
             let activeItem;
 
             const createSearchSuggestionItem = (title, description, target, icon, active = false) => {
-                return `<a href="${target}"
+                return `<a href="${target}" role="menuitem"
                     ${active ? 'data-active' : ''}
                     class="search-suggestion--item">
                     <img class="search-suggestion--item-icon" alt="${title}" src="${icon}" />
@@ -430,20 +430,20 @@
 </head>
 <body>
 
-<header>
-    <div class="search">
-        <img alt="Search" class="search--icon-overlay"
+<header role="presentation">
+    <div class="search" role="presentation" >
+        <img aria-hidden="true" alt="Search" class="search--icon-overlay"
              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBmaWxsPSIjZmZmIiBoZWlnaHQ9IjgwMHB4IiB3aWR0aD0iODAwcHgiIHZlcnNpb249IjEuMSIgaWQ9IkNhcGFfMSIgdmlld0JveD0iMCAwIDQ4OC40IDQ4OC40IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMCwyMDMuMjVjMCwxMTIuMSw5MS4yLDIwMy4yLDIwMy4yLDIwMy4yYzUxLjYsMCw5OC44LTE5LjQsMTM0LjctNTEuMmwxMjkuNSwxMjkuNWMyLjQsMi40LDUuNSwzLjYsOC43LDMuNiAgICBzNi4zLTEuMiw4LjctMy42YzQuOC00LjgsNC44LTEyLjUsMC0xNy4zbC0xMjkuNi0xMjkuNWMzMS44LTM1LjksNTEuMi04Myw1MS4yLTEzNC43YzAtMTEyLjEtOTEuMi0yMDMuMi0yMDMuMi0yMDMuMiAgICBTMCw5MS4xNSwwLDIwMy4yNXogTTM4MS45LDIwMy4yNWMwLDk4LjUtODAuMiwxNzguNy0xNzguNywxNzguN3MtMTc4LjctODAuMi0xNzguNy0xNzguN3M4MC4yLTE3OC43LDE3OC43LTE3OC43ICAgIFMzODEuOSwxMDQuNjUsMzgxLjksMjAzLjI1eiIvPgoJPC9nPgo8L2c+Cjwvc3ZnPgo="/>
 
         <input type="search" placeholder="Search ..." class="search--search-field"/>
-        <div class="search-suggestions hidden">
+        <div role="menu" aria-label="Search results" class="search-suggestions hidden">
         </div>
     </div>
 </header>
-<aside class="overlay--left">
+<aside class="overlay--left" role="presentation" aria-description="Mascot">
     <img class="overlay--mascot" src="{{ .Assets.Mascot }}" alt="Mascot"/>
 </aside>
-<aside class="overlay--right">
+<aside class="overlay--right" role="presentation" aria-description="Logo">
     <img class="overlay--logo" src="{{ .Assets.Logo }}" alt="Logo"/>
 </aside>
 <main class="items-container">
@@ -451,12 +451,13 @@
         No items to display.
     </p>
     {{ range .Sections }}
-        <section class="item-section">
-            <h2 class="item-section--title">{{ .Title }}</h2>
+        <section role="group" class="item-section" aria-label="{{ .Title }}">
+            <h2 aria-hidden="true" role="heading" class="item-section--title">{{ .Title }}</h2>
             <div class="item-section--items">
                 {{ range .Entries }}
-                    <a class="item-section--item" href="{{ .Link }}" data-search-text="{{ .Text }}" data-description="{{ .Description }}" title="{{ .Description }}">
+                    <a class="item-section--item" href="{{ .Link }}" data-search-text="{{ .Text }}" data-description="{{ .Description }}" title="{{ .Description }}" aria-label="{{ .Text }}" aria-description="{{ .Description }}" role="listitem">
                         <img alt="icon"
+                             aria-hidden="true"
                              src="{{ .InlineIcon }}"
                              class="item-section--item-icon"></img>
                         <div class="item-section--item-title">{{ .Text }}</div>
