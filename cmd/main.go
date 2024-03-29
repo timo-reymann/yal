@@ -9,7 +9,6 @@ import (
 	"github.com/timo-reymann/yal/pkg/templating"
 	"log"
 	"net/http"
-	_ "net/http/pprof"
 	"os"
 )
 
