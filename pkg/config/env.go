@@ -19,8 +19,10 @@ func envWithDefault(variable string, fallback string) string {
 func imageFromEnv(variable string, fallbackFile string) (string, error) {
 	path := envWithDefault(variable, fallbackFile)
 	resolvedPath, err := assets.LookupImgAnyExt(path2.Join(ImageFolder(), path))
+	// in case file can not be found locally try to load from URL
+	// or search for full file name
 	if err != nil {
-		return "", err
+		return assets.InlineIcon(path)
 	}
 
 	return assets.InlineIcon(resolvedPath)

@@ -67,6 +67,8 @@ services:
       YAL_IMAGES_FOLDER: /app/images
       # Omit file extension as it will be picked up by name automatically
       # each of the entries is searched like ${YAL_IMAGES_FOLDER}/<icon>{png,jpg,jpeg,svg}
+      # if that does not succeed, an attempt is made to load the path as is and if
+      # there is no such file it tries to load it as an URL.
       YAL_MASCOT: mascot # the mascot to display on the left
       YAL_LOGO: logo # logo to display on the right
       YAL_BACKGROUND: background # background image for page
