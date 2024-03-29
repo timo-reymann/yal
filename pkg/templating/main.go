@@ -12,7 +12,7 @@ import (
 //go:embed index.gohtml
 var DefaultTemplate string
 
-func RenderTemplate(path string, c *config.Configuration) (string, error) {
+func RenderTemplate(path string, c *config.Configuration) ([]byte, error) {
 	var htmlFile []byte
 	var err error
 	if path == "builtin" {
@@ -20,7 +20,7 @@ func RenderTemplate(path string, c *config.Configuration) (string, error) {
 	} else {
 		htmlFile, err = os.ReadFile(path)
 		if err != nil {
-			return "", err
+			return nil, err
 		}
 	}
 
@@ -32,14 +32,14 @@ func RenderTemplate(path string, c *config.Configuration) (string, error) {
 	})
 	tmpl, err = tmpl.Parse(string(htmlFile))
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	var outputBuffer bytes.Buffer
 	err = tmpl.Execute(&outputBuffer, c)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	return outputBuffer.String(), nil
+	return outputBuffer.Bytes(), nil
 }

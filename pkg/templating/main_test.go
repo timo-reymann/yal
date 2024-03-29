@@ -22,7 +22,7 @@ func TestRenderTemplate_Default(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if templated == "" {
+	if templated == nil {
 		t.Fatal("Expected template to be rendered for default")
 	}
 }
@@ -32,7 +32,7 @@ func TestRenderTemplate_DefaultFile(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if templated == "" {
+	if templated == nil {
 		t.Fatal("Expected template to be rendered for default")
 	}
 }

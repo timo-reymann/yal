@@ -4,17 +4,19 @@ import (
 	_ "embed"
 	"flag"
 	"github.com/timo-reymann/yal/pkg/buildinfo"
+	"github.com/timo-reymann/yal/pkg/compress"
 	"github.com/timo-reymann/yal/pkg/config"
 	"github.com/timo-reymann/yal/pkg/templating"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 )
 
-func renderTemplate(templateFile string) (string, error) {
+func renderTemplate(templateFile string) ([]byte, error) {
 	c, err := config.Load()
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	return templating.RenderTemplate(templateFile, c)
@@ -46,7 +48,7 @@ func Run() {
 		log.Println("Rendering " + *renderOutput)
 
 		if *renderOutput == "-" {
-			_, _ = os.Stdout.WriteString(rendered)
+			_, _ = os.Stdout.Write(rendered)
 			return
 		}
 
@@ -56,16 +58,23 @@ func Run() {
 		}
 		defer templatedFile.Close()
 
-		_, err = templatedFile.WriteString(rendered)
+		_, err = templatedFile.Write(rendered)
 		if err != nil {
 			log.Fatalf("Failed to write templated content to file: %s", err.Error())
 		}
 	}
 
 	if *serve {
+		renderedGz, err := compress.GzBytes(rendered)
+		if err != nil {
+			log.Fatalf("Failed to compress HTML page for HTTP server: %s", err.Error())
+		}
+
 		log.Println("Starting server on 0.0.0.0:" + config.Port())
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-			_, _ = w.Write([]byte(rendered))
+			w.Header().Set("Content-Type", "text/html")
+			w.Header().Set("Content-Encoding", "gzip")
+			_, _ = w.Write(renderedGz)
 		})
 
 		log.Fatal(http.ListenAndServe(":"+config.Port(), nil))
