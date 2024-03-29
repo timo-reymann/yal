@@ -12,8 +12,8 @@ func GzBytes(data []byte) ([]byte, error) {
 	if _, err := gzw.Write(data); err != nil {
 		return nil, err
 	}
+	_ = gzw.Close()
 	gzd := renderedGzBuffer.Bytes()
-	renderedGzBuffer.Reset()
 
 	return gzd, nil
 }
