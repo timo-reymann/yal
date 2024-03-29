@@ -31,6 +31,7 @@ yal - Yet Another Landingpage
 - integrated search
 - inlines external images on start up
 - dependency free
+- fully accessible for blind people & screen reader users
 
 ## Requirements
 
