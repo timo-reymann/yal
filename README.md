@@ -35,7 +35,7 @@ yal - Yet Another Landingpage
 
 ## Requirements
 
-- any container platform
+- any container platform or supported base system
 
 ## Installation
 
