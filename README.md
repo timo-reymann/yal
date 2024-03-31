@@ -82,7 +82,7 @@ Specifying all env vars manually (if you want to customize them) and keeping the
 generate a static HTML page.
 
 1. Download the [latest release](https://github.com/timo-reymann/yal/releases/latest) for your platform
-2. `./yarl --render --output file.html`
+2. `./yal --render --output file.html`
 3. Serve `file.html` using any static file server
 
 ## Configuration
