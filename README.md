@@ -39,9 +39,9 @@ yal - Yet Another Landingpage
 
 ## Installation
 
-### Run as container
+### Run server as container
 
-The container generates the static HTML page on startup and serves it using a go webserver.
+The container generates the static HTML page on startup, keeps it in memory and serves it using a go webserver.
 
 You can simply run it using e.g. docker with docker-compose:
 
@@ -87,9 +87,27 @@ generate a static HTML page.
 
 ## Configuration
 
+THe container comes with some demo data by default, while the CLI will fail with an error when you attempt to render the
+page without the corresponding files present.
+
+### Environment variables
+
+| Name              | Description                                                                                                                            | Default                                   |
+|:------------------|:---------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------|
+| YAL_PORT          | The HTTP port of the server when run with `-serve` (default)                                                                           | 2024                                      |
+| YAL_PAGE_TITLE    | Title of the HTML page generated                                                                                                       | LinkHub - The place where it just clicks. |
+| YAL_CONFIG_FOLDER | Relative or absolute path where the [configuration files](#files) reside                                                               | ./config                                  |
+| YAL_IMAGES_FOLDER | Relative or absolute path where the images reside                                                                                      | ./config                                  |
+| YAL_MASCOT        | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a mascot on the left | mascot                                    |
+| YAL_LOGO          | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a logo on the right  | logo                                      |
+| YAL_FAVICON       | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as favicon for the page | favicon                                   |
+| YAL_BACKGROUND    | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a background image   | background                                |
+
+### Files
+
 Besides the env vars, there are two config files to maintain:
 
-### searchEngines.json
+#### searchEngines.json
 
 Configures the search engines for search box to display as last elements
 
@@ -102,7 +120,7 @@ Configures the search engines for search box to display as last elements
 ]
 ```
 
-### items.json
+#### items.json
 
 Configures the links to display.
 
@@ -167,7 +185,7 @@ make build
 
 ### Alternatives
 
-- [Heimdall](https://github.com/linuxserver/Heimdall)
-- [jump](https://github.com/daledavies/jump)
-- [homepage](https://github.com/gethomepage/homepage)
-- [homer](https://github.com/bastienwirtz/homer)
+- [Heimdall](https://github.com/linuxserver/Heimdall) - in case you need more powerful features such as widgets etc.
+- [jump](https://github.com/daledavies/jump) - if you want more whitespace and hidden functionality by default
+- [homepage](https://github.com/gethomepage/homepage) - if you want to utilize all the space completely and need widgets
+- [homer](https://github.com/bastienwirtz/homer) - for a bit more bloated UI
