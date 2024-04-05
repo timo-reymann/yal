@@ -92,16 +92,17 @@ page without the corresponding files present.
 
 ### Environment variables
 
-| Name              | Description                                                                                                                            | Default                                   |
-|:------------------|:---------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------|
-| YAL_PORT          | The HTTP port of the server when run with `-serve` (default)                                                                           | 2024                                      |
-| YAL_PAGE_TITLE    | Title of the HTML page generated                                                                                                       | LinkHub - The place where it just clicks. |
-| YAL_CONFIG_FOLDER | Relative or absolute path where the [configuration files](#files) reside                                                               | ./config                                  |
-| YAL_IMAGES_FOLDER | Relative or absolute path where the images reside                                                                                      | ./config                                  |
-| YAL_MASCOT        | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a mascot on the left | mascot                                    |
-| YAL_LOGO          | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a logo on the right  | logo                                      |
-| YAL_FAVICON       | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as favicon for the page | favicon                                   |
-| YAL_BACKGROUND    | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a background image   | background                                |
+| Name                  | Description                                                                                                                                                                                                      | Default                                   |
+|:----------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------|
+| YAL_PORT              | The HTTP port of the server when run with `-serve` (default)                                                                                                                                                     | 2024                                      |
+| YAL_PAGE_TITLE        | Title of the HTML page generated                                                                                                                                                                                 | LinkHub - The place where it just clicks. |
+| YAL_CONFIG_FOLDER     | Relative or absolute path where the [configuration files](#files) reside                                                                                                                                         | ./config                                  |
+| YAL_IMAGES_FOLDER     | Relative or absolute path where the images reside                                                                                                                                                                | ./config                                  |
+| YAL_MASCOT            | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a mascot on the left                                                                           | mascot                                    |
+| YAL_LOGO              | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a logo on the right                                                                            | logo                                      |
+| YAL_FAVICON           | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as favicon for the page                                                                           | favicon                                   |
+| YAL_BACKGROUND        | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a background image                                                                             | background                                |
+| YAL_BACKGROUND_FILTER | CSS Filter to apply to the background image. See [MDN docs for more information and examples for the filter CSS function](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information | 5px                                       |
 
 ### Files
 
