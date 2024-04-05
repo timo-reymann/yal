@@ -102,7 +102,7 @@ page without the corresponding files present.
 | YAL_LOGO              | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a logo on the right                                                                            | logo                                      |
 | YAL_FAVICON           | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as favicon for the page                                                                           | favicon                                   |
 | YAL_BACKGROUND        | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a background image                                                                             | background                                |
-| YAL_BACKGROUND_FILTER | CSS Filter to apply to the background image. See [MDN docs for more information and examples for the filter CSS function](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information | 5px                                       |
+| YAL_BACKGROUND_FILTER | CSS Filter to apply to the background image. See [MDN docs for more information and examples for the filter CSS function](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information | blur(5px) brightness(0.9)                 |
 
 ### Files
 
