@@ -8,10 +8,11 @@ import (
 )
 
 type Assets struct {
-	Logo       string
-	Mascot     string
-	Background string
-	Favicon    string
+	Logo             string
+	Mascot           string
+	Background       string
+	BackgroundFilter string
+	Favicon          string
 }
 
 type Configuration struct {
@@ -73,10 +74,11 @@ func Load() (*Configuration, error) {
 		Sections:      sections,
 		SearchEngines: searchEngines,
 		Assets: Assets{
-			Logo:       logo,
-			Mascot:     mascot,
-			Background: background,
-			Favicon:    favicon,
+			Logo:             logo,
+			Mascot:           mascot,
+			Background:       background,
+			BackgroundFilter: envWithDefault("BACKGROUND_FILTER", "blur(5px) brightness(0.9)"),
+			Favicon:          favicon,
 		},
 	}, nil
 }
