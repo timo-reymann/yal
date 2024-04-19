@@ -1,0 +1,5 @@
+sonarlint/
+shelf
+*.iml
+workspace.xml
+modules.xml
