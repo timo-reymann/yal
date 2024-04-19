@@ -25,7 +25,7 @@ type Assets struct {
 
 type Options struct {
 	TemplateFile *string
-	RenderOuput  *string
+	RenderOutput *string
 	Render       *bool
 	Serve        *bool
 }
@@ -86,7 +86,7 @@ func Get() *Configuration {
 			},
 			Options: Options{
 				TemplateFile: stringConfigOpt("template-file", "builtin", "Template file to Render, builtin uses the bundled one with yal"),
-				RenderOuput:  stringConfigOpt("output", "templated.html", "File to render to if -render is specified, use - to render to stdout"),
+				RenderOutput: stringConfigOpt("output", "templated.html", "File to render to if -render is specified, use - to render to stdout"),
 				Render:       boolConfigOpt("render", false, "Render to output and exit"),
 				Serve:        boolConfigOpt("serve", false, "Render and Serve on HTTP"),
 			},
@@ -165,5 +165,5 @@ func (o *Options) IsRenderAndServe() bool {
 }
 
 func (o *Options) IsStdoutOutput() bool {
-	return *o.RenderOuput == "-"
+	return *o.RenderOutput == "-"
 }
