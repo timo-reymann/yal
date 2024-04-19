@@ -81,7 +81,7 @@ func Get() *Configuration {
 				LogoPath:         stringConfigOpt("logo", "logo", "Basename of a file  without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the right"),
 				MascotPath:       stringConfigOpt("mascot", "mascot", "Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the left"),
 				BackgroundPath:   stringConfigOpt("background", "background", "Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a background image"),
-				BackgroundFilter: stringConfigOpt("background-filter", "blur(5px) brightness(0.9)", "CSS Filter to apply to the background image. See MDN docs for more information and examples for the filter CSS function for more information"),
+				BackgroundFilter: stringConfigOpt("background-filter", "blur(5px) brightness(0.9)", "CSS Filter to apply to the background image. See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information and examples for the filter CSS function for more information"),
 				FaviconPath:      stringConfigOpt("favicon", "favicon", "Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as favicon for the page"),
 			},
 			Options: Options{

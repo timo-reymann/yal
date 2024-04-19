@@ -90,38 +90,23 @@ generate a static HTML page.
 THe container comes with some demo data by default, while the CLI will fail with an error when you attempt to render the
 page without the corresponding files present.
 
-### Environment variables & arguments
+### Configuration
 
-> yal --help
-
-```text
- -background string
-        Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a background image (env: YAL_BACKGROUND) (default "background")
-  -background-filter string
-        CSS Filter to apply to the background image. See MDN docs for more information and examples for the filter CSS function for more information (env: YAL_BACKGROUND_FILTER) (default "blur(5px) brightness(0.9)")
-  -config-folder string
-        Relative or absolute path where the configuration files reside (env: YAL_CONFIG_FOLDER) (default "config")
-  -favicon string
-        Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as favicon for the page (env: YAL_FAVICON) (default "favicon")
-  -images-folder string
-        Relative or absolute path where the images reside (env: YAL_IMAGES_FOLDER) (default "images")
-  -logo string
-        Basename of a file  without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the right (env: YAL_LOGO) (default "logo")
-  -mascot string
-        Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the left (env: YAL_MASCOT) (default "mascot")
-  -output string
-        File to render to if -render is specified, use - to render to stdout (env: YAL_OUTPUT) (default "templated.html")
-  -page-title string
-        Title of the HTML page generated (env: YAL_PAGE_TITLE) (default "LinkHub - The place where it just clicks.")
-  -port string
-        The HTTP port of the server when run with serve (default) (env: YAL_PORT) (default "2024")
-  -render
-        Render to output and exit (env: YAL_RENDER)
-  -serve
-        Render and Serve on HTTP (env: YAL_SERVE)
-  -template-file string
-        Template file to Render, builtin uses the bundled one with yal (env: YAL_TEMPLATE_FILE) (default "builtin")
-```
+| Environment variable | Flag | Default | Description |
+| :------------------- | :--- | :------ | :---------- |
+| YAL_BACKGROUND            | --background         | `background` | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a background image  |
+| YAL_BACKGROUND_FILTER     | --background-filter  | `blur(5px) brightness(0.9)` | CSS Filter to apply to the background image. See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information and examples for the filter CSS function for more information  |
+| YAL_CONFIG_FOLDER         | --config-folder      | `config` | Relative or absolute path where the configuration files reside  |
+| YAL_FAVICON               | --favicon            | `favicon` | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as favicon for the page  |
+| YAL_IMAGES_FOLDER         | --images-folder      | `images` | Relative or absolute path where the images reside  |
+| YAL_LOGO                  | --logo               | `logo` | Basename of a file  without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the right  |
+| YAL_MASCOT                | --mascot             | `mascot` | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the left  |
+| YAL_OUTPUT                | --output             | `templated.html` | File to render to if -render is specified, use - to render to stdout  |
+| YAL_PAGE_TITLE            | --page-title         | `LinkHub - The place where it just clicks.` | Title of the HTML page generated  |
+| YAL_PORT                  | --port               | `2024` | The HTTP port of the server when run with serve (default)  |
+| YAL_RENDER                | --render             | `false` | Render to output and exit  |
+| YAL_SERVE                 | --serve              | `false` | Render and Serve on HTTP  |
+| YAL_TEMPLATE_FILE         | --template-file      | `builtin` | Template file to Render, builtin uses the bundled one with yal  |
 
 ### Files
 
