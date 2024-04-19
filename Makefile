@@ -7,6 +7,8 @@ COMMIT_REF=$(shell git rev-parse --short HEAD)
 BUILD_ARGS=-tags netgo -ldflags "-s -w -X github.com/timo-reymann/yal/pkg/buildinfo.GitSha=$(COMMIT_REF) -X github.com/timo-reymann/yal/pkg/buildinfo.Version=$(VERSION) -X github.com/timo-reymann/yal/pkg/buildinfo.BuildTime=$(NOW)"
 BIN_PREFIX="dist/yal_"
 
+all: help
+
 clean: ## Cleanup artifacts
 	@rm -rf dist/
 
@@ -50,7 +52,7 @@ build-openbsd: create-dist ## Build binaries for OpenBSD
 	@CGO_ENABLED=0 GOOS=openbsd GOARCH=amd64 go build -o $(BIN_PREFIX)openbsd-amd64 $(BUILD_ARGS)
     @CGO_ENABLED=0 GOOS=openbsd GOARCH=386 go build -o $(BIN_PREFIX)openbsd-i386 $(BUILD_ARGS)
 
-build-docker: ## Build docker image based on the built linux builds in the dist folder
+build-docker-minimal: ## Build docker image based on the built linux builds in the dist folder for use as a standalone CLI in the container
 	@docker buildx build --tag timoreymann/yal:latest \
 		--platform linux/amd64,linux/arm/v7,linux/arm64 \
 		--build-arg BUILD_TIME="$(NOW)" \
@@ -64,7 +66,19 @@ build-docker: ## Build docker image based on the built linux builds in the dist 
 		--build-arg BUILD_COMMIT_REF="$(COMMIT_REF)" \
 		--push .
 
+build-docker-ci: ## Build docker image based on the built linux builds in the dist folder for use with the common CI providers
+	@docker buildx build --tag timoreymann/yal:ci \
+			--file Dockerfile.ci \
+    		--platform linux/amd64,linux/arm/v7,linux/arm64 \
+    		--push .
+	@docker buildx build --tag timoreymann/yal:$(VERSION)-ci \
+    		--file Dockerfile.ci \
+    		--platform linux/amd64,linux/arm/v7,linux/arm64 \
+    		--push .
+
 create-checksums: ## Create checksums for binaries
 	@find ./dist -type f -exec sh -c 'sha256sum {} | cut -d " " -f 1 > {}.sha256' {} \;
 
 build: build-linux build-darwin build-windows build-freebsd build-openbsd ## Build binaries for all platform
+
+build-docker: build-docker-ci build-docker-minimal ## Build all docker image variants

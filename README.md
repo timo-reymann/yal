@@ -85,6 +85,54 @@ generate a static HTML page.
 2. `./yal --render --output file.html`
 3. Serve `file.html` using any static file server
 
+### Use with your CI provider
+
+Instead of the regular image use the CI version: `timoreymann/yal:ci` or for a versioned
+tag `timoreymann/yal:{version}-ci`.
+
+#### CircleCI
+
+```yaml
+version: 2.1
+
+# Define the jobs we want to run for this project
+jobs:
+  build-page:
+    docker:
+      - image: timoreymann/yal:ci
+    steps:
+      # Checkout repo with yal config and assets
+      - checkout
+      - run:
+          name: Generate page with yal
+          command: yal
+      # Upload the artifact html somewhere
+      - store_artifacts:
+          path: templated.html
+
+workflows:
+  build_link_hub:
+    jobs:
+      - build-page
+```
+
+#### Gitlab CI
+
+```yaml
+stages:
+  - build
+
+build-page:
+  stage: build
+  image: timoreymann/yal:ci
+  script:
+    # Build page with yal config and assets from project
+    - yal
+  artifacts:
+    paths:
+      - templated.html
+```
+
 ## Configuration
 
 THe container comes with some demo data by default, while the CLI will fail with an error when you attempt to render the
@@ -92,21 +140,21 @@ page without the corresponding files present.
 
 ### Configuration
 
-| Environment variable | Flag | Default | Description |
-| :------------------- | :--- | :------ | :---------- |
-| YAL_BACKGROUND            | --background         | `background` | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a background image  |
-| YAL_BACKGROUND_FILTER     | --background-filter  | `blur(5px) brightness(0.9)` | CSS Filter to apply to the background image. See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information and examples for the filter CSS function for more information  |
-| YAL_CONFIG_FOLDER         | --config-folder      | `config` | Relative or absolute path where the configuration files reside  |
-| YAL_FAVICON               | --favicon            | `favicon` | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as favicon for the page  |
-| YAL_IMAGES_FOLDER         | --images-folder      | `images` | Relative or absolute path where the images reside  |
-| YAL_LOGO                  | --logo               | `logo` | Basename of a file  without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the right  |
-| YAL_MASCOT                | --mascot             | `mascot` | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the left  |
-| YAL_OUTPUT                | --output             | `templated.html` | File to render to if -render is specified, use - to render to stdout  |
-| YAL_PAGE_TITLE            | --page-title         | `LinkHub - The place where it just clicks.` | Title of the HTML page generated  |
-| YAL_PORT                  | --port               | `2024` | The HTTP port of the server when run with serve (default)  |
-| YAL_RENDER                | --render             | `false` | Render to output and exit  |
-| YAL_SERVE                 | --serve              | `false` | Render and Serve on HTTP  |
-| YAL_TEMPLATE_FILE         | --template-file      | `builtin` | Template file to Render, builtin uses the bundled one with yal  |
+| Environment variable  | Flag                | Default                                     | Description                                                                                                                                                                                                      |
+|:----------------------|:--------------------|:--------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| YAL_BACKGROUND        | --background        | `background`                                | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a background image                                                                                    |
+| YAL_BACKGROUND_FILTER | --background-filter | `blur(5px) brightness(0.9)`                 | CSS Filter to apply to the background image. See [MDN docs](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information and examples for the filter CSS function for more information |
+| YAL_CONFIG_FOLDER     | --config-folder     | `config`                                    | Relative or absolute path where the configuration files reside                                                                                                                                                   |
+| YAL_FAVICON           | --favicon           | `favicon`                                   | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as favicon for the page                                                                                  |
+| YAL_IMAGES_FOLDER     | --images-folder     | `images`                                    | Relative or absolute path where the images reside                                                                                                                                                                |
+| YAL_LOGO              | --logo              | `logo`                                      | Basename of a file  without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the right                                                                                  |
+| YAL_MASCOT            | --mascot            | `mascot`                                    | Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the left                                                                                    |
+| YAL_OUTPUT            | --output            | `templated.html`                            | File to render to if -render is specified, use - to render to stdout                                                                                                                                             |
+| YAL_PAGE_TITLE        | --page-title        | `LinkHub - The place where it just clicks.` | Title of the HTML page generated                                                                                                                                                                                 |
+| YAL_PORT              | --port              | `2024`                                      | The HTTP port of the server when run with serve (default)                                                                                                                                                        |
+| YAL_RENDER            | --render            | `false`                                     | Render to output and exit                                                                                                                                                                                        |
+| YAL_SERVE             | --serve             | `false`                                     | Render and Serve on HTTP                                                                                                                                                                                         |
+| YAL_TEMPLATE_FILE     | --template-file     | `builtin`                                   | Template file to Render, builtin uses the bundled one with yal                                                                                                                                                   |
 
 ### Files
 
