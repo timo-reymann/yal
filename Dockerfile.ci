@@ -1,0 +1,18 @@
+FROM busybox AS bin
+COPY ./dist /binaries
+RUN if [[ "$(arch)" == "x86_64" ]]; then \
+        architecture="amd64"; \
+    else \
+        architecture="arm64"; \
+    fi; \
+    cp /binaries/yal_linux-${architecture} /bin/yal && \
+    chmod +x /bin/yal && \
+    chown 65532:65532 /bin/yal
+
+FROM alpine:3.7
+RUN addgroup -g 1000 ci \
+    && adduser -G ci -u 1000 ci -D  \
+    && apk add --no-cache git bash
+COPY --from=bin /bin/yal /bin/yal
+USER ci
+ENTRYPOINT ["/bin/bash"]
