@@ -8,7 +8,7 @@
     <meta name='robots' content='noindex,nofollow'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
 
-    <link rel="icon" href="{{ .Assets.Favicon }}">
+    <link rel="icon" href="{{ .Favicon }}">
     <style>
         * {
             margin: 0;
@@ -23,7 +23,7 @@
         html {
             color: white;
             background: black;
-            background-image: url("{{.Assets.Background}}");
+            background-image: url("{{.Background}}");
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
@@ -443,10 +443,10 @@
     </div>
 </header>
 <aside class="overlay--left" role="presentation" aria-description="Mascot">
-    <img class="overlay--mascot" src="{{ .Assets.Mascot }}" alt="Mascot"/>
+    <img class="overlay--mascot" src="{{ .Mascot }}" alt="Mascot"/>
 </aside>
 <aside class="overlay--right" role="presentation" aria-description="Logo">
-    <img class="overlay--logo" src="{{ .Assets.Logo }}" alt="Logo"/>
+    <img class="overlay--logo" src="{{ .Logo }}" alt="Logo"/>
 </aside>
 <main class="items-container">
     <p class="items-container--no-results hidden">

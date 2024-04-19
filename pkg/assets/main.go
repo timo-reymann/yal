@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func loadFileOrUrl(path string) ([]byte, error) {
@@ -17,7 +18,7 @@ func loadFileOrUrl(path string) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-	} else {
+	} else if strings.HasPrefix(path, "http") {
 		// File does not exist locally, download it from the internet
 		resp, err := http.Get(path)
 		if err != nil {
@@ -29,6 +30,8 @@ func loadFileOrUrl(path string) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
+	} else {
+		return nil, fmt.Errorf(path + " could not be found and is no resolvable URL")
 	}
 	return data, nil
 }
