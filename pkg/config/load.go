@@ -2,89 +2,118 @@ package config
 
 import (
 	"encoding/json"
+	"flag"
+	"github.com/timo-reymann/yal/pkg/assets"
 	"github.com/timo-reymann/yal/pkg/model"
 	"os"
 	path2 "path"
+	"strings"
+)
+
+var (
+	trueVal  = true
+	falseVal = false
 )
 
 type Assets struct {
-	Logo             string
-	Mascot           string
-	Background       string
-	BackgroundFilter string
-	Favicon          string
+	LogoPath         *string
+	MascotPath       *string
+	BackgroundPath   *string
+	BackgroundFilter *string
+	FaviconPath      *string
+}
+
+type Options struct {
+	TemplateFile *string
+	RenderOuput  *string
+	Render       *bool
+	Serve        *bool
 }
 
 type Configuration struct {
-	PageTitle     string
 	Sections      []model.Section
 	SearchEngines []model.SearchEngine
 	Assets        Assets
+	Options       Options
+	PageTitle     *string
+	Port          *string
+	ImageFolder   *string
+	ConfigFolder  *string
 }
 
-// Port returns the HTTP port the service will be available on
-func Port() string {
-	return envWithDefault("PORT", "2024")
+func envVarName(name string) string {
+	return "YAL_" + strings.ToUpper(strings.ReplaceAll(name, "-", "_"))
 }
 
-// ImageFolder returns the folder where images will be searched in
-func ImageFolder() string {
-	return envWithDefault("IMAGES_FOLDER", "images")
+func stringConfigOpt(name string, fallback string, description string) *string {
+	envVar := envVarName(name)
+	envVal := os.Getenv(envVar)
+	if envVal != "" {
+		return &envVal
+	}
+	return flag.String(name, fallback, description+" (env: "+envVar+")")
 }
 
-// Folder returns the folder where config files are located
-func Folder() string {
-	return envWithDefault("CONFIG_FOLDER", "config")
+func boolConfigOpt(name string, fallback bool, description string) *bool {
+	envVar := envVarName(name)
+	envVal := os.Getenv(envVar)
+	if envVal != "" {
+		if envVal == "1" || envVal == "true" {
+			return &trueVal
+		} else if envVal == "0" || envVal == "false" {
+			return &falseVal
+		}
+	}
+	return flag.Bool(name, fallback, description+" (env: "+envVar+")")
 }
 
-// Load config based on file system and environment variables
-func Load() (*Configuration, error) {
-	sections, err := loadSections()
-	if err != nil {
-		return nil, err
+var config *Configuration
+
+// Get config based on file system and environment variables
+func Get() *Configuration {
+	if config == nil {
+		config = &Configuration{
+			PageTitle:    stringConfigOpt("page-title", "LinkHub - The place where it just clicks.", "Title of the HTML page generated"),
+			Port:         stringConfigOpt("port", "2024", "The HTTP port of the server when run with serve (default)"),
+			ImageFolder:  stringConfigOpt("images-folder", "images", "Relative or absolute path where the images reside"),
+			ConfigFolder: stringConfigOpt("config-folder", "config", "Relative or absolute path where the configuration files reside"),
+			Assets: Assets{
+				LogoPath:         stringConfigOpt("logo", "logo", "Basename of a file  without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the right"),
+				MascotPath:       stringConfigOpt("mascot", "mascot", "Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the left"),
+				BackgroundPath:   stringConfigOpt("background", "background", "Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a background image"),
+				BackgroundFilter: stringConfigOpt("background-filter", "blur(5px) brightness(0.9)", "CSS Filter to apply to the background image. See MDN docs for more information and examples for the filter CSS function for more information"),
+				FaviconPath:      stringConfigOpt("favicon", "favicon", "Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as favicon for the page"),
+			},
+			Options: Options{
+				TemplateFile: stringConfigOpt("template-file", "builtin", "Template file to Render, builtin uses the bundled one with yal"),
+				RenderOuput:  stringConfigOpt("output", "templated.html", "File to render to if -render is specified, use - to render to stdout"),
+				Render:       boolConfigOpt("render", false, "Render to output and exit"),
+				Serve:        boolConfigOpt("serve", false, "Render and Serve on HTTP"),
+			},
+		}
 	}
 
-	searchEngines, err := loadSearchEngines()
-	if err != nil {
-		return nil, err
-	}
-
-	logo, err := imageFromEnv("LOGO", "logo")
-	if err != nil {
-		return nil, err
-	}
-
-	mascot, err := imageFromEnv("MASCOT", "mascot")
-	if err != nil {
-		return nil, err
-	}
-
-	background, err := imageFromEnv("BACKGROUND", "background")
-	if err != nil {
-		return nil, err
-	}
-
-	favicon, err := imageFromEnv("FAVICON", "favicon")
-	if err != nil {
-		return nil, err
-	}
-
-	return &Configuration{
-		PageTitle:     envWithDefault("PAGE_TITLE", "LinkHub - The place where it just clicks."),
-		Sections:      sections,
-		SearchEngines: searchEngines,
-		Assets: Assets{
-			Logo:             logo,
-			Mascot:           mascot,
-			Background:       background,
-			BackgroundFilter: envWithDefault("BACKGROUND_FILTER", "blur(5px) brightness(0.9)"),
-			Favicon:          favicon,
-		},
-	}, nil
+	return config
 }
 
-func loadConfig(baseName string, v interface{}) error {
-	data, err := os.ReadFile(path2.Join(Folder(), baseName+".json"))
+func (c *Configuration) Load() error {
+	searchEngines, err := c.loadSearchEngines()
+	if err != nil {
+		return err
+	}
+	c.SearchEngines = searchEngines
+
+	sections, err := c.loadSections()
+	if err != nil {
+		return err
+	}
+	c.Sections = sections
+
+	return nil
+}
+
+func (c *Configuration) loadConfigFile(baseName string, v interface{}) error {
+	data, err := os.ReadFile(path2.Join(*c.ConfigFolder, baseName+".json"))
 	if err != nil {
 		return err
 	}
@@ -92,14 +121,49 @@ func loadConfig(baseName string, v interface{}) error {
 	return json.Unmarshal(data, v)
 }
 
-func loadSearchEngines() ([]model.SearchEngine, error) {
+func (c *Configuration) loadSearchEngines() ([]model.SearchEngine, error) {
 	var searchEngines []model.SearchEngine
-	err := loadConfig("searchEngines", &searchEngines)
+	err := c.loadConfigFile("searchEngines", &searchEngines)
 	return searchEngines, err
 }
 
-func loadSections() ([]model.Section, error) {
+func (c *Configuration) loadSections() ([]model.Section, error) {
 	var sections []model.Section
-	err := loadConfig("items", &sections)
+	err := c.loadConfigFile("items", &sections)
 	return sections, err
+}
+
+func (c *Configuration) loadImage(path *string) (string, error) {
+	resolvedPath, err := assets.LookupImgAnyExt(path2.Join(*c.ImageFolder, *path))
+	// in case file can not be found locally try to load from URL
+	// or search for full file name
+	if err != nil {
+		return assets.InlineIcon(*path)
+	}
+
+	return assets.InlineIcon(resolvedPath)
+}
+
+func (c *Configuration) Logo() (string, error) {
+	return c.loadImage(c.Assets.LogoPath)
+}
+
+func (c *Configuration) Background() (string, error) {
+	return c.loadImage(c.Assets.BackgroundPath)
+}
+
+func (c *Configuration) Favicon() (string, error) {
+	return c.loadImage(c.Assets.FaviconPath)
+}
+
+func (c *Configuration) Mascot() (string, error) {
+	return c.loadImage(c.Assets.MascotPath)
+}
+
+func (o *Options) IsRenderAndServe() bool {
+	return *o.Render && *o.Serve
+}
+
+func (o *Options) IsStdoutOutput() bool {
+	return *o.RenderOuput == "-"
 }

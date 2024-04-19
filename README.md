@@ -90,19 +90,38 @@ generate a static HTML page.
 THe container comes with some demo data by default, while the CLI will fail with an error when you attempt to render the
 page without the corresponding files present.
 
-### Environment variables
+### Environment variables & arguments
 
-| Name                  | Description                                                                                                                                                                                                      | Default                                   |
-|:----------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------|
-| YAL_PORT              | The HTTP port of the server when run with `-serve` (default)                                                                                                                                                     | 2024                                      |
-| YAL_PAGE_TITLE        | Title of the HTML page generated                                                                                                                                                                                 | LinkHub - The place where it just clicks. |
-| YAL_CONFIG_FOLDER     | Relative or absolute path where the [configuration files](#files) reside                                                                                                                                         | ./config                                  |
-| YAL_IMAGES_FOLDER     | Relative or absolute path where the images reside                                                                                                                                                                | ./config                                  |
-| YAL_MASCOT            | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a mascot on the left                                                                           | mascot                                    |
-| YAL_LOGO              | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a logo on the right                                                                            | logo                                      |
-| YAL_FAVICON           | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as favicon for the page                                                                           | favicon                                   |
-| YAL_BACKGROUND        | Basename of a file without extension (searched in `$YAL_IMAGES_FOLDER`) or an HTTP url of the image to be used as a background image                                                                             | background                                |
-| YAL_BACKGROUND_FILTER | CSS Filter to apply to the background image. See [MDN docs for more information and examples for the filter CSS function](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function) for more information | blur(5px) brightness(0.9)                 |
+> yal --help
+
+```text
+ -background string
+        Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a background image (env: YAL_BACKGROUND) (default "background")
+  -background-filter string
+        CSS Filter to apply to the background image. See MDN docs for more information and examples for the filter CSS function for more information (env: YAL_BACKGROUND_FILTER) (default "blur(5px) brightness(0.9)")
+  -config-folder string
+        Relative or absolute path where the configuration files reside (env: YAL_CONFIG_FOLDER) (default "config")
+  -favicon string
+        Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as favicon for the page (env: YAL_FAVICON) (default "favicon")
+  -images-folder string
+        Relative or absolute path where the images reside (env: YAL_IMAGES_FOLDER) (default "images")
+  -logo string
+        Basename of a file  without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the right (env: YAL_LOGO) (default "logo")
+  -mascot string
+        Basename of a file without extension (searched in images-folder) or an HTTP url of the image to be used as a logo on the left (env: YAL_MASCOT) (default "mascot")
+  -output string
+        File to render to if -render is specified, use - to render to stdout (env: YAL_OUTPUT) (default "templated.html")
+  -page-title string
+        Title of the HTML page generated (env: YAL_PAGE_TITLE) (default "LinkHub - The place where it just clicks.")
+  -port string
+        The HTTP port of the server when run with serve (default) (env: YAL_PORT) (default "2024")
+  -render
+        Render to output and exit (env: YAL_RENDER)
+  -serve
+        Render and Serve on HTTP (env: YAL_SERVE)
+  -template-file string
+        Template file to Render, builtin uses the bundled one with yal (env: YAL_TEMPLATE_FILE) (default "builtin")
+```
 
 ### Files
 

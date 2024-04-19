@@ -38,41 +38,12 @@ func TestEnvWithDefault_EnvEmpty(t *testing.T) {
 	}
 }
 
-func TestImageFromEnv_ExistingFile(t *testing.T) {
-	os.Setenv("YAL_IMAGES_FOLDER", "testdata")
-	os.Setenv("YAL_IMAGE_VARIABLE", "icon")
-	_, err := imageFromEnv("IMAGE_VARIABLE", "fallback.png")
-	if err != nil {
-		t.Errorf("Unexpected error: %v", err)
-	}
-}
-
-func TestImageFromEnv_NonExistingFile(t *testing.T) {
-	os.Setenv("YAL_IMAGE_VARIABLE", "nonexistent.png")
-
-	_, err := imageFromEnv("IMAGE_VARIABLE", "fallback.png")
-	if err == nil {
-		t.Errorf("Expected error, but got nil")
-	}
-}
-
-func TestPort_NotSet(t *testing.T) {
-	if Port() != "2024" {
-		t.Error("Expected default port to be set")
-	}
-}
-
-func TestConfigFolder_NotSet(t *testing.T) {
-	if Folder() != "config" {
-		t.Error("Expected default config folder to be set")
-	}
-}
-
 func TestLoad_Default(t *testing.T) {
 	os.Setenv("YAL_CONFIG_FOLDER", "../../config")
 	os.Setenv("YAL_IMAGES_FOLDER", "../../images")
 
-	c, err := Load()
+	c := Get()
+	err := c.Load()
 	if err != nil {
 		t.Fatal(err)
 	}
