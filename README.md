@@ -124,7 +124,9 @@ stages:
 
 build-page:
   stage: build
-  image: timoreymann/yal:ci
+  image:
+    name: timoreymann/yal:ci
+    entrypoint: [""]
   script:
     # Build page with yal config and assets from project
     - yal
