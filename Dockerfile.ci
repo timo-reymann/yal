@@ -9,7 +9,7 @@ RUN if [[ "$(arch)" == "x86_64" ]]; then \
     chmod +x /bin/yal && \
     chown 65532:65532 /bin/yal
 
-FROM alpine:3.19
+FROM alpine:3.20
 RUN addgroup -g 1000 ci \
     && adduser -G ci -u 1000 ci -D  \
     && apk add --no-cache git bash
