@@ -10,7 +10,7 @@ orbs:
   github-cli: circleci/github-cli@2.6.0
   docker: circleci/docker@2.8.1
   codecov: codecov/codecov@5.0.3
-  go: circleci/go@1.12.0
+  go: circleci/go@2.2.0
   github-utils: trustedshops-public/github-utils@1.1.2
 
 executors:
@@ -30,17 +30,17 @@ jobs:
     executor: go
     steps:
       - checkout
-      - go/load-cache
-      - run:
-          name: Run tests
-          command: |
-            gotestsum --junitfile unit-tests.xml
-            make save-coverage-report
-      - run:
-          name: Get test coverage
-          command: |
-            go test -race -coverprofile=coverage.txt -covermode=atomic  -v ./...
-      - go/save-cache
+      - go/with-cache:
+          steps:
+            - run:
+                name: Run tests
+                command: |
+                  gotestsum --junitfile unit-tests.xml
+                  make save-coverage-report
+            - run:
+                name: Get test coverage
+                command: |
+                  go test -race -coverprofile=coverage.txt -covermode=atomic  -v ./...
       - codecov/upload
       - store_test_results:
           path: unit-tests.xml
@@ -53,13 +53,13 @@ jobs:
     executor: go
     steps:
       - checkout
-      - go/load-cache
-      - run:
-          name: Build binaries
-          command: |
-            make build -j 2
-            make create-checksums
-      - go/save-cache
+      - go/with-cache:
+          steps:
+            - run:
+                name: Build binaries
+                command: |
+                  make build -j 2
+                  make create-checksums
       - persist_to_workspace:
           root: ./
           paths:
@@ -91,8 +91,8 @@ jobs:
       - attach_workspace:
           at: .
           name: Retrieve persisted binaries
-      -  github-cli/install:
-           version: "2.21.2"
+      - github-cli/install:
+          version: "2.21.2"
       - run:
           name: Publish release
           command: |
