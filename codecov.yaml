@@ -2,3 +2,6 @@ coverage:
   precision: 2
   round: down
   range: "50...75"
+ignore:
+  - main.go
+  - cmd/main.go
