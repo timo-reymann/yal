@@ -3,11 +3,12 @@ package config
 import (
 	"encoding/json"
 	"flag"
-	"github.com/timo-reymann/yal/pkg/assets"
-	"github.com/timo-reymann/yal/pkg/model"
 	"os"
 	path2 "path"
 	"strings"
+
+	"github.com/timo-reymann/yal/pkg/assets"
+	"github.com/timo-reymann/yal/pkg/model"
 )
 
 var (
@@ -73,7 +74,7 @@ var config *Configuration
 func Get() *Configuration {
 	if config == nil {
 		config = &Configuration{
-			PageTitle:    stringConfigOpt("page-title", "LinkHub - The place where it just clicks.", "Title of the HTML page generated"),
+			PageTitle:    stringConfigOpt("page-title", "yal - Yet Another Landing page ", "Title of the HTML page generated"),
 			Port:         stringConfigOpt("port", "2024", "The HTTP port of the server when run with serve (default)"),
 			ImageFolder:  stringConfigOpt("images-folder", "images", "Relative or absolute path where the images reside"),
 			ConfigFolder: stringConfigOpt("config-folder", "config", "Relative or absolute path where the configuration files reside"),
