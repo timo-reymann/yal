@@ -3,13 +3,14 @@ package cmd
 import (
 	_ "embed"
 	"flag"
+	"log"
+	"net/http"
+	"os"
+
 	"github.com/timo-reymann/yal/pkg/buildinfo"
 	"github.com/timo-reymann/yal/pkg/compress"
 	"github.com/timo-reymann/yal/pkg/config"
 	"github.com/timo-reymann/yal/pkg/templating"
-	"log"
-	"net/http"
-	"os"
 )
 
 func Run() {
