@@ -40,6 +40,7 @@ type Configuration struct {
 	Port          *string
 	ImageFolder   *string
 	ConfigFolder  *string
+	IsLicense     *bool
 }
 
 func envVarName(name string) string {
@@ -74,6 +75,7 @@ var config *Configuration
 func Get() *Configuration {
 	if config == nil {
 		config = &Configuration{
+			IsLicense:    boolConfigOpt("license", false, "Show license information"),
 			PageTitle:    stringConfigOpt("page-title", "yal - Yet Another Landing page ", "Title of the HTML page generated"),
 			Port:         stringConfigOpt("port", "2024", "The HTTP port of the server when run with serve (default)"),
 			ImageFolder:  stringConfigOpt("images-folder", "images", "Relative or absolute path where the images reside"),
