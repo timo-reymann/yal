@@ -3,6 +3,7 @@ package cmd
 import (
 	_ "embed"
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,9 +14,15 @@ import (
 	"github.com/timo-reymann/yal/pkg/templating"
 )
 
-func Run() {
+func Run(noticeContent []byte) {
 	c := config.Get()
 	flag.Parse()
+
+	if *c.IsLicense {
+		fmt.Printf("%s", noticeContent)
+		os.Exit(0)
+	}
+
 	if err := c.Load(); err != nil {
 		log.Fatalf("Failed to load configuration: %s", err.Error())
 	}

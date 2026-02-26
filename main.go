@@ -1,7 +1,14 @@
 package main
 
-import "github.com/timo-reymann/yal/cmd"
+import (
+	_ "embed"
+
+	"github.com/timo-reymann/yal/cmd"
+)
+
+//go:embed NOTICE
+var noticeContent []byte
 
 func main() {
-	cmd.Run()
+	cmd.Run(noticeContent)
 }
