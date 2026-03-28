@@ -16,23 +16,23 @@ RUN if [[ "$(arch)" == "x86_64" ]]; then \
 
 FROM scratch
 
-LABEL org.opencontainers.image.title="yal"
-LABEL org.opencontainers.image.description="A simple link hub, to display and search links. Allows easy branding, runs with the least privileges and is simple to use."
-LABEL org.opencontainers.image.ref.name="main"
-LABEL org.opencontainers.image.licenses='GNU GPL v3'
-LABEL org.opencontainers.image.vendor="Timo Reymann <mail@timo-reymann.de>"
-LABEL org.opencontainers.image.authors="Timo Reymann <mail@timo-reymann.de>"
-LABEL org.opencontainers.image.url="https://github.com/timo-reymann/yal"
-LABEL org.opencontainers.image.documentation="https://github.com/timo-reymann/yal"
-LABEL org.opencontainers.image.source="https://github.com/timo-reymann/yal.git"
+LABEL org.opencontainers.image.title="yal" \
+      org.opencontainers.image.description="A simple link hub, to display and search links. Allows easy branding, runs with the least privileges and is simple to use." \
+      org.opencontainers.image.ref.name="main" \
+      org.opencontainers.image.licenses='GNU GPL v3' \
+      org.opencontainers.image.vendor="Timo Reymann <mail@timo-reymann.de>" \
+      org.opencontainers.image.authors="Timo Reymann <mail@timo-reymann.de>" \
+      org.opencontainers.image.url="https://github.com/timo-reymann/yal" \
+      org.opencontainers.image.documentation="https://github.com/timo-reymann/yal" \
+      org.opencontainers.image.source="https://github.com/timo-reymann/yal.git"
 
-ENV YAL_PORT=2024
-ENV YAL_MASCOT=mascot
-ENV YAL_LOGO=logo
-ENV YAL_BACKGROUND=background
-ENV YAL_FAVICON=favicon
-ENV YAL_CONFIG_FOLDER=/app/config
-ENV YAL_IMAGES_FOLDER=/app/images
+ENV YAL_PORT=2024 \
+    YAL_MASCOT=mascot \
+    YAL_LOGO=logo \
+    YAL_BACKGROUND=background \
+    YAL_FAVICON=favicon \
+    YAL_CONFIG_FOLDER=/app/config \
+    YAL_IMAGES_FOLDER=/app/images
 
 COPY --from=gcr.io/distroless/static-debian12:nonroot / /
 USER nonroot
