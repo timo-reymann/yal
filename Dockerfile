@@ -1,4 +1,4 @@
-FROM scratch as fs
+FROM scratch AS fs
 COPY ./config /config
 COPY ./images /images
 COPY ./icons /icons
@@ -14,8 +14,7 @@ RUN if [[ "$(arch)" == "x86_64" ]]; then \
     chmod +x /bin/yal && \
     chown 65532:65532 /bin/yal
 
-FROM scratch
-
+FROM timoreymann/ubuntu-runtime:26.04
 LABEL org.opencontainers.image.title="yal" \
       org.opencontainers.image.description="A simple link hub, to display and search links. Allows easy branding, runs with the least privileges and is simple to use." \
       org.opencontainers.image.ref.name="main" \
@@ -33,9 +32,6 @@ ENV YAL_PORT=2024 \
     YAL_FAVICON=favicon \
     YAL_CONFIG_FOLDER=/app/config \
     YAL_IMAGES_FOLDER=/app/images
-
-COPY --from=gcr.io/distroless/static-debian12:nonroot / /
-USER nonroot
 
 WORKDIR /app
 COPY --from=bin /bin/yal .
