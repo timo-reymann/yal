@@ -2,6 +2,7 @@ yal - Yet Another Landingpage
 ===
 [![LICENSE](https://img.shields.io/github/license/timo-reymann/yal)](https://github.com/timo-reymann/yal/blob/main/LICENSE)
 [![DockerHub Pulls](https://img.shields.io/docker/pulls/timoreymann/yal)](https://hub.docker.com/r/timoreymann/yal)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/timo-reymann/yal/total)](https://github.com/timo-reymann/yal/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/timo-reymann/yal)](https://goreportcard.com/report/github.com/timo-reymann/yal)
 [![codecov](https://codecov.io/gh/timo-reymann/yal/graph/badge.svg?token=rsQYV5lODS)](https://codecov.io/gh/timo-reymann/yal)
 [![CircleCI](https://circleci.com/gh/timo-reymann/yal.svg?style=shield)](https://app.circleci.com/pipelines/github/timo-reymann/yal)
