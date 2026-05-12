@@ -14,7 +14,7 @@ RUN if [[ "$(arch)" == "x86_64" ]]; then \
     chmod +x /bin/yal && \
     chown 65532:65532 /bin/yal
 
-FROM timoreymann/ubuntu-runtime:26.6
+FROM timoreymann/ubuntu-runtime:26.04
 LABEL org.opencontainers.image.title="yal" \
       org.opencontainers.image.description="A simple link hub, to display and search links. Allows easy branding, runs with the least privileges and is simple to use." \
       org.opencontainers.image.ref.name="main" \
