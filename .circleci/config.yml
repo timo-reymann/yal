@@ -11,7 +11,7 @@ orbs:
   docker: circleci/docker@4.0.1
   codecov: codecov/codecov@6.0.0
   go: circleci/go@4.0.0
-  github-utils: trustedshops-public/github-utils@1.2.0
+  github-utils: trustedshops-public/github-utils@1.3.0
 
 executors:
   go:
